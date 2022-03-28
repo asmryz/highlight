@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .code {
+            white-space: pre;
+            font-size: 15px;
+        }
+
+        .line {
+            border-right: 1px solid #ccc;
+            padding-right: 10px;
+            font-size: 14px;
+
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            -o-user-select: none;
+            user-select: none;
+
+        }
+
+        table {
+            font-family: monospace;
+            background-color: rgb(255, 255, 255);
+        }
+
+        pre {
+            display: none;
+        }
+
+        .cmd {
+
+            background-color: #eee;
+            font-family: monospace;
+        }
+
+        audio::-webkit-media-controls-panel {
+            background-color: #ffffff;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('pre').map(function (i) {
+                let n = $(`pre:eq(${i}) > code`).attr('number');
+                n = n === undefined ? 0 : Number(n)
+                //console.log(`n >> ${n}`);
+                let code = $(this).text().split(/\n/);
+                let preNum = $(`pre:eq(${i})`)
+
+                const markup = `<table>
+                            <tr>
+                                <td></td>
+                                <td colspan="1" style="text-align: right;"><a href="#!" onclick="copyToClipboard($('pre:eq(${i})'))" style="color: blue;">copy</a></td>
+                            </tr>
+                            ${code.map((td, i) => `
+                            <tr>
+                                <td class="line">${i + 1 + (n !== 0 ? n - 1 : 0)}</td>
+                                <td class="code">${td.replace(/</g, '&lt;')}</td>
+                            </tr>
+                            `).join('')}
+                    </table>`
+                $(markup).insertAfter(preNum);
+            })
+        })
+        function copyToClipboard(element) {
+            var $temp = $("<textarea>");
+            $("body").append($temp);
+            $temp.val($(element).text()).select();
+            document.execCommand("copy");
+            $temp.remove();
+        }
+
+    </script>
+</head>
+
+<body>
+    <pre>
+    mkdir datasheet & cd datasheet
+    npm init -y</pre>
+
+    <audio controls>
+        <source src="audio/voice.mp3" type="audio/mpeg">
+        <p>Your browser doesn't support HTML5 audio. Here is
+            a <a href="myAudio.mp3">link to the audio</a> instead.</p>
+    </audio>
+
+    <pre>
+        1
+        2
+        3
+
+    </pre>
+    This is step # II
+    <pre><code number="24">(function() {
+    var s = document.createElement('script');
+        s.id = "some-id";
+        s.type = "text/javascript";
+    document.body.appendChild(s);
+})();
+
+</code></pre>
+
+    <pre>
+var pre = document.getElementsByTagName('pre'),
+    pl = pre.length;
+for (var i = 0; i < pl; i++) {
+    pre[i].innerHTML = '<span class="line-number"></span>' + pre[i].innerHTML + '<span class="cl"></span>';
+    var num = pre[i].innerHTML.split(/\n/).length;
+    for (var j = 0; j < num; j++) {
+        var line_num = pre[i].getElementsByTagName('span')[0];
+        line_num.innerHTML += '<span>' + (j + 1) + '</span>';
+    }
+}</pre>
+
+    <pre><code number="37">&lt;div class="example"&gt;
+    &lt;span&gt;Lorem ipsum dolor sit amet...&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+
+    <pre>
+    &lt;code&gt; is entity name for &lt;/code&gt;
+</pre>
+
+</body>
+
+</html>
