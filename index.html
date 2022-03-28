@@ -28,15 +28,16 @@
 
         table {
             font-family: monospace;
-            background-color: rgb(255, 255, 255);
+            background-color: #eee;
         }
 
         pre {
             display: none;
         }
-
+        .hide{
+            display: none;
+        }
         .cmd {
-
             background-color: #eee;
             font-family: monospace;
         }
@@ -50,8 +51,11 @@
         $(document).ready(function () {
             $('pre').map(function (i) {
                 let n = $(`pre:eq(${i}) > code`).attr('number');
+                let line = $(`pre:eq(${i}) > code`).attr('line');
+                line = line === undefined?true:false;
                 n = n === undefined ? 0 : Number(n)
                 //console.log(`n >> ${n}`);
+                //console.log(`line >> ${line}`);
                 let code = $(this).text().split(/\n/);
                 let preNum = $(`pre:eq(${i})`)
 
@@ -62,7 +66,11 @@
                             </tr>
                             ${code.map((td, i) => `
                             <tr>
-                                <td class="line">${i + 1 + (n !== 0 ? n - 1 : 0)}</td>
+                                <td class="line ${!line?'hide':''}">
+                                    <span class="">
+                                        ${i + 1 + (n !== 0 ? n - 1 : 0)}
+                                    </span>
+                                </td>
                                 <td class="code">${td.replace(/</g, '&lt;')}</td>
                             </tr>
                             `).join('')}
@@ -82,9 +90,9 @@
 </head>
 
 <body>
-    <pre>
+    <pre><code line="false">
     mkdir datasheet & cd datasheet
-    npm init -y</pre>
+    npm init -y</code></pre>
 
     <audio controls>
         <source src="audio/voice.mp3" type="audio/mpeg">
@@ -120,7 +128,7 @@ for (var i = 0; i < pl; i++) {
     }
 }</pre>
 
-    <pre><code number="37">&lt;div class="example"&gt;
+    <pre><code number="37" line="false">&lt;div class="example"&gt;
     &lt;span&gt;Lorem ipsum dolor sit amet...&lt;/span&gt;
 &lt;/div&gt;</code></pre>
 
