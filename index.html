@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset='utf-8'>
+  <title>Line numbering plugin for Highlight.js by Yauheni Pakala</title>
+
+  <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script> -->
+
+  <link rel="stylesheet" type="text/css"
+    href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/styles/atom-one-dark.min.css">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/highlight.min.js"></script>
+  <script src="src/highlightjs-line-numbers.js"></script>
+  <!-- <script src="../dist/highlightjs-line-numbers.min.js"></script> -->
+  <script>
+    hljs.highlightAll();
+
+    hljs.initLineNumbersOnLoad({
+      // singleLine:true,
+      // startFrom: 5,
+    });
+  </script>
+  <style>
+    .hljs-ln-n:before {
+      content: attr(data-line-number);
+      padding-right: 10px;
+    }
+
+    .hljs-ln-numbers {
+      text-align: left;
+      color: #ccc;
+      border-right: 1px solid #999;
+      vertical-align: top;
+      padding-right: 5px;
+
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      -khtml-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+
+    .hljs-ln-code {
+      padding-left: 10px;
+    }
+
+    .hljs-ln-code,
+    .hljs-ln-numbers {
+      line-height: 25px;
+    }
+
+    .hljs-ln td {
+      padding-left: 10px;
+    }
+
+    code {
+      white-space: pre-wrap;
+      overflow: auto;
+      font-size: 14pt;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>Examples</h1>
+
+  This is Example section of the code
+
+
+  <pre><code class="xml" data-ln-start-from="10">&lt;!DOCTYPE html&gt;
+  &lt;html&gt;
+  
+  &lt;head&gt;
+      &lt;meta&gt;
+      &lt;title&gt;@model.title&lt;/title&gt;
+      &lt;link rel='stylesheet' href='/stylesheets/style.css' /&gt;
+  &lt;/head&gt;
+  
+  &lt;body&gt;
+      &lt;h1&gt;@model.title&lt;/h1&gt;
+      &lt;p&gt;Welcome to @model.title&lt;/p&gt;
+  
+      &lt;table&gt;
+          &lt;tr&gt;
+              &lt;th&gt;Id&lt;/th&gt;
+              &lt;th&gt;Title&lt;/th&gt;
+          &lt;/tr&gt;
+          @model.courses.forEach(function(course){
+              &lt;tr&gt;
+                  &lt;td&gt;@course.courseid&lt;/td&gt;
+                  &lt;td&gt;
+                      &lt;a href="/Edit/@course.courseid"&gt;
+                          @course.title
+                      &lt;/a&gt;
+                  &lt;/td&gt;
+              &lt;/tr&gt;
+          })
+      &lt;/table&gt;
+  
+  
+  &lt;/body&gt;
+  
+  &lt;/html&gt;
+</code></pre>
+<pre><code class="xml">&lt;!DOCTYPE html&gt;
+  &lt;html lang="en"&gt;
+  
+  &lt;head&gt;
+      &lt;meta charset="UTF-8"&gt;
+      &lt;meta http-equiv="X-UA-Compatible" content="IE=edge"&gt;
+      &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+      &lt;title&gt;Document&lt;/title&gt;
+      &lt;style&gt;
+          body {
+              background-color: white;
+              padding: 50px 50px
+          }
+  
+          pre {
+              background-color: #eee;
+              overflow: auto;
+              margin: 0 0 1em;
+              padding: .5em 1em;
+          }
+  
+          pre code,
+          pre .line-number {
+              /* Ukuran line-height antara teks di dalam tag &lt;code&gt; dan &lt;span class="line-number"&gt; harus sama! */
+              font: normal normal 12px/14px "Courier New", Courier, Monospace;
+              color: black;
+              display: block;
+          }
+  
+          pre .line-number {
+              float: left;
+              margin: 0 1em 0 -1em;
+              border-right: 1px solid;
+              text-align: right;
+          }
+  
+          pre .line-number span {
+              display: block;
+              padding: 0 .5em 0 1em;
+          }
+  
+          pre .cl {
+              display: block;
+              clear: both;
+          }
+      &lt;/style&gt;
+      &lt;script&gt;
+  
+              var pre = document.getElementsByTagName('pre'),
+                  pl = pre.length;
+              for (var i = 0; i &lt; pl; i++) {
+                  pre[i].innerHTML = '&lt;span class="line-number"&gt;&lt;/span&gt;' + pre[i].innerHTML + '&lt;span class="cl"&gt;&lt;/span&gt;';
+                  var num = pre[i].innerHTML.split(/\n/).length;
+                  for (var j = 0; j &lt; num; j++) {
+                      var line_num = pre[i].getElementsByTagName('span')[0];
+                      line_num.innerHTML += '&lt;span&gt;' + (j + 1) + '&lt;/span&gt;';
+                  }
+              }
+      &lt;/script&gt;
+  &lt;/head&gt;
+  
+  &lt;body&gt;
+      &lt;pre&gt;&lt;code&gt;&lt;div class="example"&gt;
+          &lt;span&gt;Lorem ipsum dolor sit amet...&lt;/span&gt;
+      &lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;
+      &lt;pre&gt;&lt;code&gt;(function() {
+          var s = document.createElement('script');
+              s.id = "some-id";
+              s.type = "text/javascript";
+          document.body.appendChild(s);
+      })();&lt;/code&gt;&lt;/pre&gt;
+  &lt;/body&gt;
+  
+  &lt;/html&gt;  
+</code></pre>
+
+<code>
+  <pre>
+    ├── JSON
+    │   ├── academic
+    │   │   └── courses.json
+    │   └── recapsheet
+    │       ├── getData.sh
+    │       ├── grades.json
+    │       ├── heads.json
+    │       ├── marks.json
+    │       ├── schema.js
+    │       └── students.json
+    ├── bin
+    │   ├── bsondump.exe
+    │   ├── courses.json
+    │   ├── data
+    │   │   └── db
+    │   ├── mongo.exe
+    │   ├── mongo.pdb
+    │   ├── mongod.exe
+    │   ├── mongod.pdb
+    │   ├── mongodump.exe
+    │   ├── mongoexport.exe
+    │   ├── mongofiles.exe
+    │   ├── mongoimport.exe
+    │   ├── mongorestore.exe
+    │   ├── mongos.exe
+    │   ├── mongos.pdb
+    │   ├── mongosh.exe
+    │   ├── mongostat.exe
+    │   └── mongotop.exe
+    ├── mongod.cmd
+    └── mongoshell.cmd
+    
+    8 directories, 59 files
+    
+  </pre>
+</code>
+
+</body>
+
+</html>
