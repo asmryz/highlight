@@ -28,7 +28,7 @@
 
         table {
             font-family: monospace;
-            background-color: #eee;
+            /* background-color: #bbe7f1; */
         }
 
         pre {
@@ -59,10 +59,10 @@
                 let code = $(this).text().split(/\n/);
                 let preNum = $(`pre:eq(${i})`)
 
-                const markup = `<table>
+                const markup = `<table style="background-color: ${!line?"#666; font-family: 'Courier New'; color: #fff":'#eee'};">
                             <tr>
                                 <td></td>
-                                <td colspan="1" style="text-align: right;"><a href="#!" onclick="copyToClipboard($('pre:eq(${i})'))" style="color: blue;">copy</a></td>
+                                <td colspan="1" style="text-align: right;"><a href="#!" onclick="copyToClipboard($('pre:eq(${i})'))" style="text-decoration: none; user-select: none; color: ${!line?"#ccc":"blue"};">copy</a></td>
                             </tr>
                             ${code.map((td, i) => `
                             <tr>
@@ -137,5 +137,5 @@ for (var i = 0; i < pl; i++) {
 </pre>
 
 </body>
-
+    <table style="background-color: #8adbf0; text-decoration: none;"></table>
 </html>
