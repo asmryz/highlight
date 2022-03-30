@@ -23,8 +23,16 @@
             -ms-user-select: none;
             -o-user-select: none;
             user-select: none;
-
         }
+        .no-sel{
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            -o-user-select: none;
+            user-select: none;            
+        }
+
 
         table {
             font-family: monospace;
@@ -52,17 +60,32 @@
             $('pre').map(function (i) {
                 let n = $(`pre:eq(${i}) > code`).attr('number');
                 let line = $(`pre:eq(${i}) > code`).attr('line');
+                let filename = $(`pre:eq(${i}) > code`).attr('name');
                 line = line === undefined?true:false;
                 n = n === undefined ? 0 : Number(n)
+                filename = filename || ''
                 //console.log(`n >> ${n}`);
                 //console.log(`line >> ${line}`);
                 let code = $(this).text().split(/\n/);
+                code[0] === ''?code.shift():code;
+                code.pop();
                 let preNum = $(`pre:eq(${i})`)
 
                 const markup = `<table style="background-color: ${!line?"#666; font-family: 'Courier New'; color: #fff":'#eee'};">
                             <tr>
                                 <td></td>
-                                <td colspan="1" style="text-align: right;"><a href="#!" onclick="copyToClipboard($('pre:eq(${i})'))" style="text-decoration: none; user-select: none; color: ${!line?"#ccc":"blue"};">copy</a></td>
+                                <td colspan="1">
+                                    <table style:"width=100%;">
+                                        <tr>
+                                            <td align="left" width="98%" style="color: #800a0a; font-size: 16px;" class="no-sel"><strong>${filename}</strong></td>
+                                            <td align="right">
+                                                <a href="#!" onclick="copyToClipboard($('pre:eq(${i})'))" style="text-decoration: none; user-select: none; color: ${!line?"#ccc":"blue"};">
+                                                    copy
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
                             </tr>
                             ${code.map((td, i) => `
                             <tr>
@@ -100,6 +123,89 @@
             a <a href="myAudio.mp3">link to the audio</a> instead.</p>
     </audio>
 
+    <pre><code line="false">
+npm i express morgan vash mongoose jquery bootstarp
+mkdir routes views
+
+    </code></pre>
+    <pre><code line="false">
+copy NUL server.js
+copy NUL routes\index.js         
+copy NUL views\index.vash
+    </code></pre>
+    <pre><code line="false">
+    </code></pre>
+
+<pre><code name="server.js">
+const express = require('express');
+const morgan = require('morgan');
+const path = require('path');
+const PORT = process.env.PORT || 3000
+
+express()
+    .set('views', path.join(__dirname, 'views'))
+    .set('view engine', 'vash')
+    .use(morgan('dev'))
+    .use(express.urlencoded({ extended: false }))
+    .use(express.json())
+    .use('/bootstrap', express.static(path.join(__dirname, '/node_modules/bootstrap/dist'))
+    .use('/jquery', express.static(path.join(__dirname, '/node_modules/jquery/dist')))
+    .use('/', require('./routes/index'))
+    .listen(PORT, ()=> console.log(`Server is running on http://localhost:${PORT}`))        
+    </code></pre>
+
+
+    <pre><code name="routes\index.js">
+var express = require('express');
+var router = express.Router();
+
+/* GET home page. */
+router.get('/', function(req, res, next) {
+    res.render('index', { title: 'Express' });
+});
+
+module.exports = router;        
+    </code></pre>
+
+    <pre><code line="false">
+        copy NUL views\index.vash
+    </code></pre>
+
+<pre><code name="views\index.vash">
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta http-equiv="X-UA-Compatible" content="IE=edge"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;Document&lt;/title&gt;
+    &lt;link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" /&gt;
+    &lt;script type="text/javascript" src="/jquery/jquery.min.js"&gt;&lt;/script&gt;
+    &lt;script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"&gt;&lt;/script&gt;    
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h3&gt;@model.title&lt;/h3&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+<pre><code line="false">
+    nodemon -e vash,js server.js
+</code></pre>
+
+<pre><code number="10" name="views\index.vash">
+&lt;script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"&gt;&lt;/script&gt;     
+&lt;script type="text/javascript"&gt;
+    $(document).ready(function(){
+        alert(`JQuery is working ...`);
+    })
+&lt;/script&gt;      
+</code></pre>
+
+<pre><code line="false">
+    nodemon -e vash,js server.js
+</code></pre>
+
     <pre>
         1
         2
@@ -135,7 +241,12 @@ for (var i = 0; i < pl; i++) {
     <pre>
     &lt;code&gt; is entity name for &lt;/code&gt;
 </pre>
+<table>
+    <tr>
+        <td ></td>
+    </tr>
+</table>
 
 </body>
-    <table style="background-color: #8adbf0; text-decoration: none;"></table>
+    
 </html>
