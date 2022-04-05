@@ -49,7 +49,12 @@
             background-color: #eee;
             font-family: monospace;
         }
-
+        .prom{
+            color: #16BDF5;
+        }
+        .cmnt{
+            color: #888787;
+        }
         audio::-webkit-media-controls-panel {
             background-color: #ffffff;
         }
@@ -94,7 +99,14 @@
                                         ${i + 1 + (n !== 0 ? n - 1 : 0)}
                                     </span>
                                 </td>
-                                <td class="code">${td.replace(/</g, '&lt;')}</td>
+                                <td class="code">${
+                                    td
+                                    .replace(/</g, '&lt;')
+                                    .replace('[#]', '<span class="prom">')
+                                    .replace('[/#]', '</span>')
+                                    .replace('[@]', '<span class="cmnt">')
+                                    .replace('[/@]', '</span>')
+                                }</td>
                             </tr>
                             `).join('')}
                     </table>`
@@ -124,7 +136,7 @@
     </audio>
 
     <pre><code line="false">
-npm i express morgan vash mongoose jquery bootstarp
+npm i express morgan vash mongoose jquery bootstrap
 mkdir routes views
 
     </code></pre>
@@ -202,8 +214,52 @@ module.exports = router;
 &lt;/script&gt;      
 </code></pre>
 
+<pre><code number="14">
+    &lt;div class=&quot;container&quot;&gt;
+        &lt;div class=&quot;row&quot;&gt;
+            &lt;div class=&quot;col&quot;&gt;
+    
+            &lt;/div&gt;
+            &lt;div class=&quot;col&quot;&gt;
+                
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;    
+    </code></pre>
+
+<pre><code number="17" name="views\index.vash">
+&lt;div class=&quot;input-group mb-3&quot;&gt;
+    &lt;span class=&quot;input-group-text&quot; id=&quot;basic-addon1&quot;&gt;Reg. No :&lt;/span&gt;
+    &lt;input type=&quot;text&quot; class=&quot;form-control [#]pbk[/#]&quot; id=&quot;regno&quot; aria-label=&quot;RegNo&quot;&gt;
+&lt;/div&gt;    
+</code></pre>
+
+<pre><code number="13" name="views\index.vash">
+[@]//alert(`JQuery is working`)[/@]
+$('.pbk').keypress(e => {
+    if (e.which === 13) {
+        alert(`Enter Pressed`)
+    }
+})    
+</code></pre>
+
 <pre><code line="false">
     nodemon -e vash,js server.js
+</code></pre>
+
+
+<pre><code number="21" name="views\index.vash">
+&lt;div class=&quot;card&quot;&gt;
+    &lt;h5 class=&quot;card-header&quot;&gt;Student Details&lt;/h5&gt;
+    &lt;div class=&quot;card-body&quot;&gt;
+        &lt;span class=&quot;hdr text-info&quot;&gt;Student Name : &lt;/span&gt;
+        &lt;span class=&quot;card-text&quot; id=&quot;studentname&quot;&gt;&lt;/span&gt;&lt;br&gt;
+        &lt;span class=&quot;hdr text-info&quot;&gt;Father Name : &lt;/span&gt;
+        &lt;span class=&quot;card-text&quot; id=&quot;fathername&quot;&gt;&lt;/span&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<pre><code number="10">
 </code></pre>
 
     <pre>
