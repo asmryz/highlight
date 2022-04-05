@@ -259,6 +259,22 @@ $('.pbk').keypress(e => {
     &lt;/div&gt;
 &lt;/div&gt;
 </code></pre>
+<pre><code line="false">
+    mkdir api controllers
+    copy NUL api\student.js 
+</code></pre>
+
+<pre><code name="api\student.js">
+const router = require('express').Router()
+const Controller = require('../controllers');
+
+module.exports = router;
+</code></pre>
+
+<pre><code number="14">
+.use('/', require('./routes/index'))
+[#].use('/api/students/', require('./api/student'))[/#]
+</code></pre>
 <pre><code number="10">
 </code></pre>
 
